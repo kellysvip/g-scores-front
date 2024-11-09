@@ -35,9 +35,9 @@ export function generateMenuItems(
       handleItemClick={toggleDrawer(false)}
     />,
     <NestedMenuItem
-      key="menu_settings"
+      key="menu_setting"
       icon={<Settings />}
-      translationId="menu_settings"
+      translationId="menu_setting"
       href='/setting'
       handleItemClick={toggleDrawer(false)}
     />,

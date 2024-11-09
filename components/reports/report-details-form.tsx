@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 
 type ErrorsType = Record<keyof 'search', string>;
 
-export default function SearchDetailsForm() {
+export default function ReportDetailsForm() {
   const [errors, setErrors] = useState<ErrorsType>({} as ErrorsType);
 
   return (
     <div>
       <form>
-        Search
+        Report
       </form>
     </div>
   );
