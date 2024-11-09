@@ -5,8 +5,7 @@ import React from "react";
 export default function IndexPage() {
   return (
     <Layout>
-      <h1>Hello Mentor</h1>
-      <p>This is the test score management website </p>
+      <h1>Hello! This is the test score management website</h1>
     </Layout>
   );
 }
