@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { List, Drawer, Divider, IconButton } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import * as React from "react";
+import { List, Drawer, Divider, IconButton } from "@mui/material";
+import { Menu as MenuIcon } from "@mui/icons-material";
 
-import { MenuHolder } from './styled-components';
-import { generateMenuItems } from '../helpers/generate-menu-items';
+import { MenuHolder } from "./styled-components";
+import { generateMenuItems } from "../helpers/generate-menu-items";
 
 export default function MenuDrawer() {
   const [state, setState] = React.useState(false);
@@ -12,9 +12,7 @@ export default function MenuDrawer() {
     setState(open);
   };
 
-  const menuListComponents: React.ReactNode[] = generateMenuItems(
-    toggleDrawer,
-  );
+  const menuListComponents: React.ReactNode[] = generateMenuItems(toggleDrawer);
 
   return (
     <div>
@@ -34,7 +32,7 @@ export default function MenuDrawer() {
           open={state}
           onClose={toggleDrawer(false)}
           PaperProps={{
-            sx: { width: '30%' },
+            sx: { width: "30%" },
           }}
         >
           <MenuHolder role="presentation">

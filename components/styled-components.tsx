@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import Link from 'next/link';
+import styled from "@emotion/styled";
+import Link from "next/link";
 
 export const FlexCenterAlignCenterRow = styled.div`
   display: flex;
@@ -35,4 +35,3 @@ export const CustomDetailsWrapper = styled.div`
   border: 1px solid;
   border-radius: 1rem;
 `;
-

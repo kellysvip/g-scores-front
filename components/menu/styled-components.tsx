@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
-import Box from '@mui/material/Box';
-import { ListItemButton, ListItemIcon } from '@mui/material';
+import styled from "@emotion/styled";
+import Box from "@mui/material/Box";
+import { ListItemButton, ListItemIcon } from "@mui/material";
 
 export const ProfileAvatar = styled.img`
   border-radius: 5rem;

@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import IconButton from '@mui/material/IconButton';
+import styled from "@emotion/styled";
+import IconButton from "@mui/material/IconButton";
 
 export const AvatarWrapper = styled.img`
   border-radius: 1.5rem;

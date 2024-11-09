@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import Layout from '../../components/layout';
-import DashboardDetailsForm from '../../components/dashboards/dashboard-details-form';
+import Layout from "../../components/layout";
+import DashboardDetailsForm from "../../components/dashboards/dashboard-details-form";
 
 export default function render() {
-  return <Layout>
-    <DashboardDetailsForm />
-  </Layout>;
+  return (
+    <Layout>
+      <DashboardDetailsForm />
+    </Layout>
+  );
 }

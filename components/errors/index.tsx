@@ -1,6 +1,6 @@
-import React from 'react';
-import Error from 'next/error';
-import { useIntl } from 'react-intl';
+import React from "react";
+import Error from "next/error";
+import { useIntl } from "react-intl";
 
 export default function DisplayErrors({ errorCode }: { errorCode: number }) {
   const intl = useIntl();
@@ -10,7 +10,7 @@ export default function DisplayErrors({ errorCode }: { errorCode: number }) {
       statusCode={errorCode}
       title={intl.formatMessage({
         id: `${errorCode}_error_message`,
-        defaultMessage: intl.formatMessage({ id: '500_error_message' }),
+        defaultMessage: intl.formatMessage({ id: "500_error_message" }),
       })}
     />
   );
