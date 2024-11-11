@@ -6,11 +6,7 @@
     "format": "prettier --write \"**/*.(ts|tsx|js|jsx)\"",
     "start:dev": "next",
     "build": "next build",
-    "start": "next start",
-    "jest": "NODE_ENV=test jest --config jest.config.js --no-compilation-cache",
-    "test": "npm run lint && npm run jest",
-    "test:cov": "NODE_ENV=test jest --config jest.config.js --coverage",
-    "test:cov:json": "NODE_ENV=test jest --config jest.config.js --no-compilation-cache --ci --coverage --testLocationInResults --json --outputFile=./coverage/report.json"
+    "start": "next start"
   },
   "dependencies": {
     "@babel/core": "^7.21.5",
