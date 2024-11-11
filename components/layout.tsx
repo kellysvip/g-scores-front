@@ -1,6 +1,4 @@
-/* istanbul ignore file */
 import React from "react";
-import Header from "./header";
 import { useRouter } from "next/router";
 import { IntlProvider } from "react-intl";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -9,6 +7,7 @@ import { SnackbarProvider } from "notistack";
 
 import vi from "../translations/vi.json";
 import { ContentWrapper } from "./styled-components";
+import Header from "./header";
 
 const messages: { [key: string]: unknown } = { vi };
 

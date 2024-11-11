@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
-import { Box, Typography, Select, MenuItem, FormControl, InputLabel, SelectChangeEvent } from "@mui/material";
+import { Box, Typography, Select, MenuItem, FormControl, InputLabel, SelectChangeEvent, useMediaQuery } from "@mui/material";
 import { getRequest } from "../helpers/api-requests";
 
 const options: ApexOptions = {
@@ -28,10 +28,10 @@ const options: ApexOptions = {
   },
   responsive: [
     {
-      breakpoint: 2600,
+      breakpoint: 1024,
       options: {
         chart: {
-          width: 380,
+          width: 300,
         },
       },
     },
@@ -52,44 +52,56 @@ const CircleChart = () => {
     verygood: 0,
     good: 0,
     average: 0,
-    poor: 0
+    poor: 0,
   });
+
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const setUpData = () => {
     getRequest(`/students`, {
-      subject: selectedSubject
+      subject: selectedSubject,
     })
       .then((rating) => {
-        console.log('rating', );
+        console.log("rating", rating);
         setStudentRating(rating);
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 
   useEffect(() => {
     setUpData();
-
   }, [selectedSubject]);
 
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
-    setSelectedSubject(event.target.value)
+    setSelectedSubject(event.target.value);
   };
 
   function calculatePercentages(data: { [key: string]: number }): number[] {
     const total = Object.values(data).reduce((acc, value) => acc + value, 0);
 
-    const percentages = Object.values(data).map(value => {
+    const percentages = Object.values(data).map((value) => {
       const percentage = (value / total) * 100;
-      return Math.floor(percentage * 100) / 100; 
+      return Math.floor(percentage * 100) / 100;
     });
 
     return percentages;
   }
 
-  let chartData = calculatePercentages(studentRating)
+  const chartData = calculatePercentages(studentRating);
 
   return (
-    <Box sx={{ borderRadius: 1, border: 1, borderColor: "divider", bgcolor: "white", p: 3, boxShadow: 3, minWidth: 650 }}>
+    <Box
+      sx={{
+        borderRadius: 1,
+        border: 1,
+        borderColor: "divider",
+        bgcolor: "white",
+        p: 3,
+        boxShadow: 3,
+        minWidth: isMobile ? "80%" : 670,
+        maxWidth: 670,
+      }}
+    >
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 600 }}>
           REPORT
@@ -117,7 +129,7 @@ const CircleChart = () => {
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-        <ReactApexChart options={options} series={chartData} type="donut" width={380} />
+        <ReactApexChart options={options} series={chartData} type="donut" width={isMobile ? 200 : 380} />
       </Box>
 
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, justifyContent: "center" }}>

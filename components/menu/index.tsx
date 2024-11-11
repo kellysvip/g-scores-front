@@ -1,5 +1,5 @@
 import * as React from "react";
-import { List, Drawer, Divider, IconButton } from "@mui/material";
+import { List, Drawer, Divider, IconButton, useMediaQuery, Theme } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 
 import { MenuHolder } from "./styled-components";
@@ -8,11 +8,16 @@ import { generateMenuItems } from "../helpers/generate-menu-items";
 export default function MenuDrawer() {
   const [state, setState] = React.useState(false);
 
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+  const isMediumScreen = useMediaQuery((theme: Theme) => theme.breakpoints.between("sm", "md"));
+
   const toggleDrawer = (open: boolean) => () => {
     setState(open);
   };
 
   const menuListComponents: React.ReactNode[] = generateMenuItems(toggleDrawer);
+
+  const drawerWidth = isSmallScreen ? "75%" : isMediumScreen ? "50%" : "30%";
 
   return (
     <div>
@@ -32,7 +37,7 @@ export default function MenuDrawer() {
           open={state}
           onClose={toggleDrawer(false)}
           PaperProps={{
-            sx: { width: "30%" },
+            sx: { width: drawerWidth },
           }}
         >
           <MenuHolder role="presentation">

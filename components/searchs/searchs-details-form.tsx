@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { Card, CardContent, Typography, useMediaQuery } from "@mui/material";
+import { debounce } from "@mui/material/utils";
+
 import { FlexStartColumn, InputWrapper } from "../styled-components";
 import { SearchInput } from "../search-input";
-import { debounce } from "@mui/material/utils";
 import { getRequest } from "../helpers/api-requests";
 import { Student } from "../constants/types/student.type";
-import { Card, CardContent, Typography } from "@mui/material";
 
-type ErrorsType = Record<keyof "search", string>;
+export const SEARCH_DELAY_MS = 400;
 
-export const SEARCH_DELAY_MS = 500;
+const languageMap = {
+  N1: 'English',
+  N2: 'Russian',
+  N3: 'French',
+  N4: 'Chinese',
+  N5: 'German',
+  N6: 'Japanese',
+  N7: 'Korean'
+};
 
 export default function SearchDetailsForm() {
-  const [errors, setErrors] = useState<ErrorsType>({} as ErrorsType);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [student, setStudent] = useState<Student>();
 
@@ -37,18 +45,20 @@ export default function SearchDetailsForm() {
     setUpData();
   }, [search]);
 
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const isTablet = useMediaQuery("(min-width:601px) and (max-width:1024px)");
+
   return (
     <FlexStartColumn>
-      <Card sx={{ minWidth: 500 }}>
+      <Card sx={{ minWidth: isMobile ? 300 : isTablet ? 400 : 500, padding: isMobile ? 2 : 4 }}>
         <CardContent>
           <form>
             <InputWrapper>
               <FlexStartColumn>
-                <div style={{ fontSize: "30px", fontWeight: "bold" }}>
-                  {" "}
-                  User Registration{" "}
-                </div>
-                <div> Registration number: </div>
+                <Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
+                  User Registration
+                </Typography>
+                <Typography> Registration number: </Typography>
 
                 <SearchInput handleChange={handleSearchTextChange} />
               </FlexStartColumn>
@@ -57,14 +67,19 @@ export default function SearchDetailsForm() {
         </CardContent>
       </Card>
 
-      <Card sx={{ minWidth: 500, marginTop: "30px" }}>
+      <Card sx={{ minWidth: isMobile ? 300 : isTablet ? 400 : 500, marginTop: 3, padding: isMobile ? 2 : 4 }}>
         <CardContent>
           {!student ? (
             <Typography sx={{ fontWeight: "bold" }}>
-              Không tìm thấy thí sinh
+              Cannot find this student's registration number
             </Typography>
           ) : (
             <>
+              {student.id && (
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Number: {student.id}
+                </Typography>
+              )}
               {student.math && (
                 <Typography sx={{ fontWeight: "bold" }}>
                   Math: {student.math}
@@ -107,7 +122,7 @@ export default function SearchDetailsForm() {
               )}
               {student.foreignLanguage && (
                 <Typography sx={{ fontWeight: "bold" }}>
-                  Foreign Language: {student.foreignLanguage}
+                  {languageMap[student.foreignLanguageCode as keyof typeof languageMap]}: {student.foreignLanguage}
                 </Typography>
               )}
             </>

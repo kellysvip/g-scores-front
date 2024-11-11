@@ -1,57 +1,62 @@
-"use client";
-
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, Select, MenuItem, FormControl, InputLabel, SelectChangeEvent } from "@mui/material";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-interface ChartTwoState {
-  series: {
-    name: string;
-    data: number[];
-  }[];
-}
+import { getRequest } from "../helpers/api-requests";
 
-const ChartTwo: React.FC = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState("This Week");
+const ColumnChart: React.FC = () => {
+  const [selectedSubject, setSelectedSubject] = useState("math");
+  const [studentGrade, setStudentGrade] = useState({});
 
-  const handlePeriodChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectedPeriod(event.target.value as string);
+  const setUpData = () => {
+    getRequest(`/students/count_grade`, {
+      subject: selectedSubject
+    })
+      .then((grade) => {
+        console.log('rating', grade);
+        setStudentGrade(grade);
+      })
+      .catch(() => { });
   };
 
-  const series = [
-    {
-      name: "Sales",
-      data: [44, 55, 41, 67, 22, 43, 65],
-    },
-    {
-      name: "Revenue",
-      data: [13, 23, 20, 8, 13, 27, 15],
-    },
-  ];
+  useEffect(() => {
+    setUpData();
 
-  const data = series[0].data.map((_, index) => ({
-    day: ["M", "T", "W", "T", "F", "S", "S"][index],
-    sales: series[0].data[index],
-    revenue: series[1].data[index],
+  }, [selectedSubject]);
+
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    setSelectedSubject(event.target.value)
+  };
+
+  const data = Object.entries(studentGrade).map(([score, quantity]) => ({
+    score: parseFloat(score),
+    quantity,
   }));
 
   return (
     <Card sx={{ width: "100%", boxShadow: 3 }}>
       <CardHeader
-        title="Profit this week"
+        title="Score Distribution"
         action={
           <FormControl>
-            <InputLabel id="select-period">Period</InputLabel>
+            <InputLabel id="select-subject">Subject</InputLabel>
             <Select
-              labelId="select-period"
-              value={selectedPeriod}
-              // onChange={handlePeriodChange}
-              label="Period"
+              labelId="select-subject"
+              value={selectedSubject}
+              onChange={handleSelectChange}
+              label="Subject"
               size="small"
               sx={{ width: 150 }}
             >
-              <MenuItem value="This Week">This Week</MenuItem>
-              <MenuItem value="Last Week">Last Week</MenuItem>
+              <MenuItem value="math">Math</MenuItem>
+              <MenuItem value="physics">Physics</MenuItem>
+              <MenuItem value="chemistry">Chemistry</MenuItem>
+              <MenuItem value="literature">Literature</MenuItem>
+              <MenuItem value="history">History</MenuItem>
+              <MenuItem value="geography">Geography</MenuItem>
+              <MenuItem value="biology">Biology</MenuItem>
+              <MenuItem value="civicEducation">Civic Education</MenuItem>
+              <MenuItem value="foreignLanguage">Foreign Language</MenuItem>
             </Select>
           </FormControl>
         }
@@ -60,12 +65,10 @@ const ChartTwo: React.FC = () => {
         <ResponsiveContainer width="100%" height={335}>
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="day" />
-            <YAxis />
+            <XAxis dataKey="score" label={{ value: "Score", position: "insideBottom", offset: -5 }} />
+            <YAxis label={{ value: "Quantity", angle: -90, position: "insideLeft" }} />
             <Tooltip />
-            <Legend />
-            <Bar dataKey="sales" name="Sales" fill="#3C50E0" />
-            <Bar dataKey="revenue" name="Revenue" fill="#80CAEE" />
+            <Bar dataKey="quantity" name="Quantity" fill="#3C50E0" />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>
@@ -73,4 +76,4 @@ const ChartTwo: React.FC = () => {
   );
 };
 
-export default ChartTwo;
+export default ColumnChart;
