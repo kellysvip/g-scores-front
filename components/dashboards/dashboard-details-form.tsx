@@ -1,13 +1,13 @@
 "use client";
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React from "react";
 
-
-type ErrorsType = Record<keyof "search", string>;
+const ColumnChart = dynamic(() => import("../../components/charts/column-chart"), {
+  ssr: false,
+});
 
 export default function DashboardDetailsForm() {
   return (
-    <>
-    </>
+    <ColumnChart />
   );
 }

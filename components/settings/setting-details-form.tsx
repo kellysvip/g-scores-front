@@ -1,10 +1,6 @@
-import React, { useState } from "react";
-
-type ErrorsType = Record<keyof "search", string>;
+import React from "react";
 
 export default function SettingDetailsForm() {
-  const [errors, setErrors] = useState<ErrorsType>({} as ErrorsType);
-
   return (
     <div>
       <form>Setting</form>
